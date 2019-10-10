@@ -2,7 +2,7 @@
 {% block body%}
 <h1>Welcome to our page</h1>
 
-{% if user %}
-<h2>Bienvenido {{user.username}}</h2>
+{% if current_user.is_authenticated %}
+<h2>Bienvenido {{current_user.username}}</h2>
 {% endif %}
 {% endblock %}
