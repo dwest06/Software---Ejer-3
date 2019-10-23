@@ -9,6 +9,7 @@ from passlib.hash import sha256_crypt
 app = Flask(__name__)
 app.secret_key = "super secret key"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+
 db = SQLAlchemy(app)
 
 # LOGIN
@@ -19,7 +20,7 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 # DATABASE
-class User(db.Model, UserMixin):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -50,6 +51,38 @@ admin.add_view(ModelView(User, db.session))
 @app.route("/")
 def home():
     return render_template("home.html")
+
+@app.route('/crud')
+def home2():
+    users = User.query.all()
+    return render_template('index.html', users = users)
+
+@app.route('/create-user', methods=['POST'])
+def create():
+    new_user = User(username=request.form['username'], email=request.form['email'], password=request.form['password'], admin=False)
+    db.session.add(new_user)
+    db.session.commit()
+    return redirect(url_for('home2'))    
+
+@app.route('/update',methods=["POST"])
+def update():
+    newusername = request.form.get("newusername")
+    oldusername = request.form.get("oldusername")
+    newemail = request.form.get("newemail")
+    user = User.query.filter_by(username=oldusername).first()
+    user.username = newusername
+    user.email = newemail
+    db.session.commit()
+    return redirect(url_for('home2'))
+
+@app.route('/delete',methods=["POST"])
+def delete():
+    username = request.form.get("username")
+    user = User.query.filter_by(username=username).first()
+    db.session.delete(user)
+    db.session.commit()
+    return redirect(url_for('home2'))
+
 
 # Register form
 @app.route("/register", methods=["GET","POST"])
