@@ -1,70 +1,25 @@
-from flask import Flask,render_template,request,session,logging,url_for,redirect,flash
-from flask_sqlalchemy import SQLAlchemy
+from flask import Blueprint, render_template, request, url_for,redirect,flash
 from flask_login import UserMixin, LoginManager, current_user, login_user, logout_user, login_required
-from flask_admin import AdminIndexView, Admin
-from flask_admin.contrib.sqla import ModelView
-from passlib.hash import sha256_crypt
+# from werkzeug import check_password_hash, generate_password_hashd
+from app import db
+from .models import User
 
-# CONFIGS
-app = Flask(__name__)
-app.secret_key = "super secret key"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-
-db = SQLAlchemy(app)
-
-# LOGIN
-login_manager = LoginManager()
-login_manager.init_app(app)
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
-
-# DATABASE
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(60), nullable=False)
-    admin = db.Column(db.Boolean, default=False, nullable=False)
-
-    def is_admin(self):
-        return self.admin
-
-    def __repr__(self):
-        return f"User('{self.id}' ,'{self.username}', '{self.email}')"
-
-# ADMIN
-
-class CustomAdminView(AdminIndexView):
-    def is_accessible(self):
-        return current_user.is_authenticated and current_user.is_admin()
-
-    def inaccessible_callback(self):
-        return redirect(url_for("login"))
-
-
-admin = Admin(app, index_view=CustomAdminView())
-admin.add_view(ModelView(User, db.session))
+usuarios = Blueprint('usuarios', __name__, url_prefix='/usuarios')
 
 # VIEWS
 
-@app.route("/")
-def home():
-    return render_template("home.html")
-
-@app.route('/crud')
-def home2():
-    users = User.query.all()
-    return render_template('index.html', users = users)
-
-@app.route('/create-user', methods=['POST'])
+@usuarios.route('/create-user', methods=['POST'])
 def create():
-    new_user = User(username=request.form['username'], email=request.form['email'], password=request.form['password'], admin=False)
+    new_user = User(
+        username=request.form['username'], 
+        email=request.form['email'], 
+        password=request.form['password'], 
+        admin=False)
     db.session.add(new_user)
     db.session.commit()
     return redirect(url_for('home2'))    
 
-@app.route('/update',methods=["POST"])
+@usuarios.route('/update',methods=["POST"])
 def update():
     newusername = request.form.get("newusername")
     oldusername = request.form.get("oldusername")
@@ -75,7 +30,7 @@ def update():
     db.session.commit()
     return redirect(url_for('home2'))
 
-@app.route('/delete',methods=["POST"])
+@usuarios.route('/delete',methods=["POST"])
 def delete():
     username = request.form.get("username")
     user = User.query.filter_by(username=username).first()
@@ -85,7 +40,7 @@ def delete():
 
 
 # Register form
-@app.route("/register", methods=["GET","POST"])
+@usuarios.route("/register", methods=["GET","POST"])
 @login_required
 def register():
     if request.method == "POST":
@@ -116,7 +71,7 @@ def register():
             return redirect(".home")
 
 # Login 
-@app.route("/login", methods=["GET","POST"])
+@usuarios.route("/login", methods=["GET","POST"])
 def login():
     if request.method == "POST":
         username = request.form.get("username")
@@ -135,12 +90,8 @@ def login():
 
     return render_template("login.html")
 
-@app.route("/logout")
+@usuarios.route("/logout")
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("home"))
-
-
-if __name__=="__main__":
-    app.run(debug=True)
