@@ -1,0 +1,57 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col pt-2">
+        <h1 style="text-align: center;">Perfiles de Usuarios</h1>
+        <!--
+        <form method="POST" action="/create-user">
+            <input type="text" name="username" placeholder="username">
+            <input type="email" name="email" placeholder="email">
+            <input type="password" name="password" placeholder="password">
+            <input type="submit" value='Add user'>
+        </form>-->
+        <input type="search">
+        <button class="btn btn-info">Buscar</button>
+        <a class="btn btn-primary" href="{{ url_for('usuarios.register') }}">Agregar</a>
+        <!--<h1>Users</h1>-->
+        <br><br>
+        <table style="background-color:#bad0eb; border-radius: 10px;">
+            <thead>
+                <th>Id</th>
+                <th>Username</th>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                        {{user.id}}
+                        <br>
+                    </td>
+                    <form method="POST" action="{{ url_for('usuarios.update') }}">
+                        <input type="hidden" value="{{user.id}}" name="id">
+                        <td>
+                            <input type="text" value="{{user.username}}" name="newusername">
+                        </td>
+                        <td>
+                            <input type="email" value="{{user.email}}" name="newemail">
+                        </td>
+                        <td>
+                            <input type="submit" value="Update">
+                        </td>
+                    </form>
+                    <td>
+                        <form method="POST" action="{{ url_for('usuarios.delete') }}" style="display: inline">
+                            <input type="hidden" value="{{user.id}}" name="id">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

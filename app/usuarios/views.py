@@ -8,35 +8,34 @@ usuarios = Blueprint('usuarios', __name__, url_prefix='/usuarios')
 
 # VIEWS
 
-@usuarios.route('/create-user', methods=['POST'])
-def create():
-    new_user = User(
-        username=request.form['username'], 
-        email=request.form['email'], 
-        password=request.form['password'], 
-        admin=False)
-    db.session.add(new_user)
-    db.session.commit()
-    return redirect(url_for('home2'))    
+@usuarios.route('/perfiles', methods=['GET'])
+def perfiles():
+    if request.method == "GET":
+        users = User.query.all()
+    return render_template('perfiles_usuarios.html', users = users)    
 
 @usuarios.route('/update',methods=["POST"])
 def update():
-    newusername = request.form.get("newusername")
-    oldusername = request.form.get("oldusername")
-    newemail = request.form.get("newemail")
-    user = User.query.filter_by(username=oldusername).first()
-    user.username = newusername
-    user.email = newemail
-    db.session.commit()
-    return redirect(url_for('home2'))
+    if request.method == "POST":
+        pk = request.form.get("id")
+        newusername = request.form.get("newusername")
+        newemail = request.form.get("newemail")
+
+        user = User.query.get(pk)
+
+        user.username = newusername
+        user.email = newemail
+
+        db.session.commit()
+        return redirect(url_for("gestion.home2"))
 
 @usuarios.route('/delete',methods=["POST"])
 def delete():
-    username = request.form.get("username")
-    user = User.query.filter_by(username=username).first()
+    pk = request.form.get("id")
+    user = User.query.get(pk)
     db.session.delete(user)
     db.session.commit()
-    return redirect(url_for('home2'))
+    return redirect(url_for("gestion.home2"))
 
 
 # Register form
@@ -48,9 +47,6 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
         confirm = request.form.get("confirm")
-        #secure_password = sha256_crypt.encrypt(str(password)) # Encriptar
-        print(email, username, password, confirm)
-        print("--------------------------")
 
         if password == confirm:
             # Creamos el user
@@ -59,7 +55,7 @@ def register():
             # Guardamos en la db
             db.session.add(user)
             db.session.commit()
-            return redirect(url_for('login'))
+            return redirect(url_for("gestion.home2"))
         else:
             flash("password does not match","error")
             return render_template("register.html")
@@ -68,7 +64,7 @@ def register():
             return render_template("register.html")
         else:
             flash("Acceso no permitido", "error")
-            return redirect(".home")
+            return redirect(url_for("gestion.home2"))
 
 # Login 
 @usuarios.route("/login", methods=["GET","POST"])
@@ -82,7 +78,7 @@ def login():
         if user is not None:
             if user.password == password:
                 login_user(user)
-                return render_template("home.html")
+                return redirect(url_for("gestion.home2"))
         
             # flash("Credenciales Invalidas", "error")
         else:
@@ -94,4 +90,4 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("home"))
+    return redirect(url_for("gestion.home2"))

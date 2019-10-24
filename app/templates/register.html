@@ -1,5 +1,5 @@
-{% extends "base.html" %}
-{% block body%}
+{% extends "index.html" %}
+{% block content%}
 <div class="container">
     <h1>Register</h1>
     {% with errors = get_flashed_messages(category_filter=["error"]) %}
@@ -14,7 +14,7 @@
     </div>
     {% endif %}
     {% endwith %}
-    <form action="/register" method="POST">
+    <form action="" method="POST">
         <div class="form-group">
             <input type="text" name="email" class="form-control" placeholder="email" required>
         </div>
@@ -27,7 +27,7 @@
         <div class="form-group">
             <input type="password" name="confirm" class="form-control" placeholder="confirm password" required>
         </div>
-        <button class="btn btn-primary" type="submit">submit</button>
+        <button class="btn btn-primary" type="submit">Submit</button>
     </form>
 </div>
 {% endblock %}

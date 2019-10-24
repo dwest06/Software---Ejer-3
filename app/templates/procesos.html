@@ -1,0 +1,48 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col pt-2">
+        <h1 style="text-align: center;">Diciplinas del Proceso</h1>
+
+        <input type="search">
+        <button class="btn btn-info">Buscar</button>
+        <a class="btn btn-primary" href="{{ add }}">Agregar</a>
+
+        <br><br>
+        <table style="background-color:#bad0eb; border-radius: 10px;">
+            <thead>
+                <th>Id</th>
+                <th>Nombre</th>
+            </thead>
+            <tbody>
+                {% for diciplina in diciplinas %}
+                <tr>
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                        {{diciplina.id}}
+                        <br>
+                    </td>
+                    <form method="POST" action="{{ update }}">
+                        <input type="hidden" value="{{diciplina.id}}" name="id">
+                        <td>
+                            <input type="text" value="{{diciplina.name}}" name="name">
+                        </td>
+                        <td>
+                            <input type="submit" value="Update">
+                        </td>
+                    </form>
+                    <td>
+                        <form method="POST" action="{{ delete }}" style="display: inline">
+                            <input type="hidden" value="{{diciplina.id}}" name="id">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
