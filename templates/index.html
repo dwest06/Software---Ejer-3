@@ -1,42 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-</head>
-  <body>
-    <h1>Add user</h1>
-    <form method="POST" action="/create-user">
-      <input type="text" name="username" placeholder="username">
-      <input type="email" name="email" placeholder="email">
-      <input type="password" name="password" placeholder="password">
-      <input type="submit" value='Add user'>
-    </form>
-    <h1>Users</h1>
-    <table>
-      {% for user in users %}
-        <tr>
-          <td>
-            {{user.username}}
-          </td>
-          <td>
-            <form method="POST" action="/update">
-              <input type="hidden" value="{{user.username}}" name="oldusername">
-              <input type="text" value="{{user.username}}" name="newusername">
-              <input type="email" value="{{user.email}}" name="newemail">
-              <input type="submit" value="Update">
-            </form>
-          </td>
-          <td>
-            <form method="POST" action="/delete" style="display: inline">
-              <input type="hidden" value="{{user.username}}" name="username">
-              <input type="submit" value="Delete">
-            </form>
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-  </body>
-</html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href='style.css'>
+  </head>
+<body style="background-color: rgb(215, 250, 255);">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-2 collapse d-md-flex bg-light pt-2 min-vh-100" id="sidebar">
+        <ul class="nav flex-column flex-nowrap">
+          <li class="nav-item"><a class="nav-link" href="">Menu</a></li>                     
+          <li class="nav-item"><a class="nav-link" href="configuracion">Configuración</a></li>
+          <li class="nav-item"><a class="nav-link" href="proceso">Disciplinas del Proceso</a></li>
+          <li class="nav-item"><a class="nav-link" href="soporte">Disciplinas de Soporte</a></li>
+          <li class="nav-item"><a class="nav-link" href="adminusuarios">Admin Usuarios</a></li>
+        </ul>
+      </div>
+      <div class="col pt-2">
+        <h1 style="text-align: center;">Perfiles de Usuarios</h1>
+        <!--
+        <form method="POST" action="/create-user">
+          <input type="text" name="username" placeholder="username">
+          <input type="email" name="email" placeholder="email">
+          <input type="password" name="password" placeholder="password">
+          <input type="submit" value='Add user'>
+        </form>-->
+        <input type="search">
+        <button>Buscar</button>
+        <!--<h1>Users</h1>-->
+        <br><br>
+        <h4>Id:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login:</h4>
+        <table style="background-color:#bad0eb; border-radius: 10px;">
+          {% for user in users %}
+          <tr>
+            <td style="padding-left: 12px; padding-right: 12px;">
+              {{user.id}}
+              <br>
+            </td>
+            <td>
+              <form method="POST" action="/update"></form>
+                <input type="hidden" value="{{user.username}}" name="oldusername">
+                <input type="text" value="{{user.username}}" name="newusername">
+                <input type="email" value="{{user.email}}" name="newemail">
+                <input type="submit" value="Update">
+              </form>
+            </td>
+            <td>
+              <form method="POST" action="/delete" style="display: inline">
+                <input type="hidden" value="{{user.username}}" name="username">
+                <input type="submit" value="Delete">
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html> 
