@@ -61,3 +61,13 @@ class CustomAdminView(AdminIndexView):
 
 admin = Admin(app, index_view=CustomAdminView())
 admin.add_view(ModelView(User, db.session))
+
+try:
+    u = User.query.filter_by(username='admin').first()
+    u.username
+    print('Ya existente', u)
+except:
+    u = User(username='admin', email='admin@admin.com', password='da123456', permiso=1)
+    db.session.add(u)
+    db.session.commit()
+    print('Creado')

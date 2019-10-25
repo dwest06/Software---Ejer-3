@@ -4,14 +4,29 @@ from app import db
 from flask_login import UserMixin
 
 class User(db.Model, UserMixin):
+    PERMISOS = {
+        1 : 'Admin',
+        2 : 'Gerente',
+        3 : 'Empleado'
+    }
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    admin = db.Column(db.Boolean, default=False, nullable=False)
+    permiso = db.Column(db.Integer)
+    
 
     def is_admin(self):
-        return self.admin
+        return self.permiso == 1
 
     def __repr__(self):
         return f"User('{self.id}' ,'{self.username}', '{self.email}')"
+
+# class Permisos(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(20), unique=True, nullable=False)
+#     # user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+#     def __repr__(self):
+#         return '<Permiso ' + self.name + '>'

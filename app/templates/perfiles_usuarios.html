@@ -39,6 +39,17 @@
                             <input type="email" value="{{user.email}}" name="newemail">
                         </td>
                         <td>
+                            <select name="cargo" id="cargo">
+                                {% for no, permiso in cargos.items() %}
+                                    {% if user.permiso == no %}
+                                        <option value="{{no}}" selected>{{permiso}}</option>
+                                    {% else %}
+                                        <option value="{{no}}">{{permiso}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
                             <input type="submit" value="Update">
                         </td>
                     </form>

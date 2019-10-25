@@ -12,8 +12,9 @@ usuarios = Blueprint('usuarios', __name__, url_prefix='/usuarios')
 @usuarios.route('/perfiles', methods=['GET'])
 def perfiles():
     if request.method == "GET":
+        print(current_user.is_admin())
         users = User.query.all()
-    return render_template('perfiles_usuarios.html', users = users)    
+    return render_template('perfiles_usuarios.html', users = users, cargos= User.PERMISOS )    
 
 @login_required
 @usuarios.route('/update',methods=["POST"])
@@ -22,11 +23,13 @@ def update():
         pk = request.form.get("id")
         newusername = request.form.get("newusername")
         newemail = request.form.get("newemail")
+        cargo = request.form.get("cargo")
 
         user = User.query.get(pk)
 
         user.username = newusername
         user.email = newemail
+        user.permiso = int(cargo)
 
         db.session.commit()
         return redirect(url_for("gestion.home2"))
@@ -53,7 +56,7 @@ def register():
 
         if password == confirm:
             # Creamos el user
-            user = User(username = username, email = email, password = password)
+            user = User(username = username, email = email, password = password, permiso=3)
 
             # Guardamos en la db
             db.session.add(user)

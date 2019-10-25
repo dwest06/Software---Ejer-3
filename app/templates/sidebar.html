@@ -2,10 +2,15 @@
     <ul class="nav flex-column flex-nowrap">
         <li class="nav-item"><a class="nav-link" href="{{ url_for('gestion.home2')}}">Menu</a></li>                     
         <li class="nav-item"><a class="nav-link" href="#">Configuración</a></li>
-        {% if current_user.is_authenticated and current_user.admin %}
+        {% if current_user.is_authenticated and current_user.is_admin() %}
         <li class="nav-item"><a class="nav-link" href="{{ url_for('gestion.procesos')}}">Disciplinas del Proceso</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ url_for('gestion.soporte')}}">Disciplinas de Soporte</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a></li>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('usuarios.logout') }}">Logout</a></li>
+        {% else %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('usuarios.login') }}">Login</a></li>
         {% endif %}
     </ul>
 </div>
