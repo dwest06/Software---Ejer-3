@@ -1,11 +1,22 @@
 <div class="col-2 collapse d-md-flex bg-light pt-2 min-vh-100" id="sidebar">
     <ul class="nav flex-column flex-nowrap">
         <li class="nav-item"><a class="nav-link" href="{{ url_for('gestion.home2')}}">Menu</a></li>                     
-        <li class="nav-item"><a class="nav-link" href="#">Configuración</a></li>
         {% if current_user.is_authenticated and current_user.is_admin() %}
+        <!--<li class="nav-item"><a class="nav-link" href="#">Configuración</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ url_for('gestion.procesos')}}">Disciplinas del Proceso</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ url_for('gestion.soporte')}}">Disciplinas de Soporte</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a></li>   
+        -->
+        <div class="dropdown show">
+            <a class="nav-link" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Configuración
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="{{ url_for('gestion.procesos')}}" >Disciplinas del Proceso</a>
+                <a class="dropdown-item" href="{{ url_for('gestion.soporte')}}">Disciplinas de Soporte</a>
+                <a class="dropdown-item" href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a>
+            </div>
+        </div>
         {% endif %}
         {% if current_user.is_authenticated %}
         <li class="nav-item"><a class="nav-link" href="{{ url_for('usuarios.logout') }}">Logout</a></li>
