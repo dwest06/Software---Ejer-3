@@ -154,3 +154,36 @@ def gruposp_delete():
         db.session.commit()
         return redirect(url_for("gestion.gruposp"))
     return redirect(url_for('gestion.gruposp')) 
+
+# TECNICAS Y HERRAMIENTAS
+@login_required
+@gestion.route("/tec-her")
+def tec_her():
+    tecs = Tecnicas.query.all()
+    tools = Herramientas.query.all()
+    add_tecs = url_for('gestion.tecs_add')
+    add_tools  = url_for('gestion.tools_add')
+    update_tecs = url_for('gestion.tecs_update')
+    update_tools  = url_for('gestion.tools_update')
+    delete_tecs = url_for('gestion.tecs_delete')
+    delete_tools  = url_for('gestion.tools_delete')
+    return render_template('tecs-tools.html', 
+                            tecs = tecs, 
+                            her = tools, 
+                            add_tecs = add_tecs, 
+                            add_her = add_tools, 
+                            update_tecs = update_tecs,
+                            update_her = update_tools,
+                            delete_tecs = delete_tecs, 
+                            delete_her = delete_her)
+
+# ACTORES
+
+@login_required
+@gestion.route("/actores")
+def actores():
+    actores = Actores.query.all()
+    add = url_for('gestion.actores_add')
+    update = url_for('gestion.actores_update')
+    delete = url_for('gestion.actores_delete')
+    # Necesito saber que renderizar
