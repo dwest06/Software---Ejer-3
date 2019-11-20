@@ -8,7 +8,6 @@ from app import app
 from flask_testing import TestCase
 from app.usuarios.models import User
 from app.gestion.models import Procesos, Soporte
-from config import *
 from app import db
 
 TEST_DB = 'test.db'
