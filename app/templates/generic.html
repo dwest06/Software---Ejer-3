@@ -5,7 +5,7 @@
 <div class="row">
 
     <div class="col pt-2">
-        <h1 style="text-align: center;">Diciplinas del Proceso</h1>
+        <h1 style="text-align: center;">{{ view }}</h1>
 
         <input type="search">
         <button class="btn btn-info">Buscar</button>
@@ -18,16 +18,16 @@
                 <th>Nombre</th>
             </thead>
             <tbody>
-                {% for diciplina in diciplinas %}
+                {% for form in forms %}
                 <tr>
                     <td style="padding-left: 12px; padding-right: 12px;">
-                        {{diciplina.id}}
+                        {{form.id}}
                         <br>
                     </td>
                     <form method="POST" action="{{ update }}">
-                        <input type="hidden" value="{{diciplina.id}}" name="id">
+                        <input type="hidden" value="{{form.id}}" name="id">
                         <td>
-                            <input type="text" value="{{diciplina.name}}" name="name">
+                            <input type="text" value="{{form.name}}" name="name">
                         </td>
                         <td>
                             <input type="submit" value="Update">
@@ -35,7 +35,7 @@
                     </form>
                     <td>
                         <form method="POST" action="{{ delete }}" style="display: inline">
-                            <input type="hidden" value="{{diciplina.id}}" name="id">
+                            <input type="hidden" value="{{form.id}}" name="id">
                             <input type="submit" value="Delete">
                         </form>
                     </td>
