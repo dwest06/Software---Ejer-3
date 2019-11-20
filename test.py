@@ -38,21 +38,21 @@ class BasicTests(unittest.TestCase):
     #### helper methods ####
     ########################
  
-    def register(self, username, email, password, confirm):
+    def test_register(self):
         return self.app.post(
             '/usuarios/register',
-            data=dict(username=username, email=email, password=password, permiso=confirm),
+            #data=dict(username=username, email=email, password=password, permiso=confirm),
             follow_redirects=True
         )
     
-    def login(self, username, password):
+    def test_login(self):
         return self.app.post(
             '/usuarios/login',
-            data=dict(username=username, password=password),
+            #data=dict(username=username, password=password),
             follow_redirects=True
         )
     
-    def logout(self):
+    def test_logout(self):
         return self.app.get(
             '/usuarios/login',
             follow_redirects=True)
@@ -63,8 +63,10 @@ class BasicTests(unittest.TestCase):
     ###############
  
     def test_main_page(self):
-        #response = self.register('hola','patkennedy79@gmail.com', 'da123456', 1)
+        response = self.test_register()
         response = self.app.get('/', follow_redirects=True)
+        #self.assertEqual(response.status_code, 200)
+        #response = self.app.get('/', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         #self.assertIn(b'Thanks for registering!', response.data)
 
