@@ -2,7 +2,7 @@
 # We will define this inside /app/__init__.py in the next sections.
 from app import db
 from flask_login import UserMixin
-from flask_validator import (ValidateEmail, ValidateLessThanOrEqual, ValidateGreaterThanOrEqual
+from flask_validator import (ValidateEmail, ValidateLessThanOrEqual, ValidateGreaterThanOrEqual)
 
 class User(db.Model, UserMixin):
     PERMISOS = {
@@ -28,7 +28,7 @@ class User(db.Model, UserMixin):
     def __declare_last__(cls):
         ValidateLessThanOrEqual(User.permiso, 3)
         ValidateGreaterThanOrEqual(User.permiso, 1)
-        ValidateEmail(User.email, true, true, "El E-mail no es valido. Por favor revisalo.")
+        ValidateEmail(User.email, True, True, "El E-mail no es valido. Por favor revisalo.")
 
 
 # class Permisos(db.Model):
