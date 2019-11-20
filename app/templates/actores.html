@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col pt-2">
+        <h1 style="text-align: center;">Actores</h1>
+
+        <input type="search">
+        <button class="btn btn-info">Buscar</button>
+        <a class="btn btn-primary" href="{{ add }}">Agregar</a>
+
+        <br><br>
+        <table style="background-color:#bad0eb; border-radius: 10px;">
+            <thead>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Rol</th>
+            </thead>
+            <tbody>
+                {% for field in form %}
+                <tr>
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                        {{field.id}}
+                        <br>
+                    </td>
+                    <form method="POST" action="{{ update }}">
+                        <input type="hidden" value="{{field.id}}" name="id">
+                        <td>
+                            <input type="text" value="{{field.fname}}" name="fname">
+                        </td>
+                        <td>
+                            <input type="text" value="{{field.lname}}" name="lname">
+                        </td>
+                        <td>
+                            <input type="text" value="{{field.rol}}" name="rol">
+                        </td>
+                        <td>
+                            <input type="submit" value="Update">
+                        </td>
+                    </form>
+                    <td>
+                        <form method="POST" action="{{ delete }}" style="display: inline">
+                            <input type="hidden" value="{{field.id}}" name="id">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

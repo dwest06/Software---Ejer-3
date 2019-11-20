@@ -40,6 +40,7 @@ class Actores(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fname = db.Column(db.String(100), nullable=False)
     lname = db.Column(db.String(100), nullable=False)
-    # Necesito saber qué son los roles
+    rol = db.Column(db.String(100), nullable=False)
+    
     def __rep__(self):
         return '<Actor ' + str(self.id) + ' ' + self.fname + ' ' + self.lname + '>'
