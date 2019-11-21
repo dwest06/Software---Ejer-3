@@ -1,0 +1,86 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col pt-2">
+        <h1 style="text-align: center;">Técnicas y Herramientas</h1>
+
+        <h2 style="text-align: left;">Técnicas</h2>
+        <input type="search">
+        <button class="btn btn-info">Buscar</button>
+        <a class="btn btn-primary" href="{{ add_tecs }}">Agregar Técnica</a>
+
+        <br><br>
+        <table style="background-color:#bad0eb; border-radius: 10px;">
+            <thead>
+                <th>Id</th>
+                <th>Descripción</th>
+            </thead>
+            <tbody>
+                {% for field in tecs %}
+                <tr>
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                        {{field.id}}
+                        <br>
+                    </td>
+                    <form method="POST" action="{{ update_tecs }}">
+                        <input type="hidden" value="{{field.id}}" name="id">
+                        <td>
+                            <input type="text" value="{{field.desc}}" name="desc">
+                        </td>
+                        <td>
+                            <input type="submit" value="Actualizar">
+                        </td>
+                    </form>
+                    <td>
+                        <form method="POST" action="{{ delete_tecs }}" style="display: inline">
+                            <input type="hidden" value="{{field.id}}" name="id">
+                            <input type="submit" value="Eliminar">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2 style="text-align: left;">Herramientas</h2>
+        <input type="search">
+        <button class="btn btn-info">Buscar</button>
+        <a class="btn btn-primary" href="{{ add_her }}">Agregar Herramientas</a>
+
+        <br><br>
+        <table style="background-color:#bad0eb; border-radius: 10px;">
+            <thead>
+                <th>Id</th>
+                <th>Descripción</th>
+            </thead>
+            <tbody>
+                {% for field in her %}
+                <tr>
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                        {{ field.id }}
+                        <br>
+                    </td>
+                    <form method="POST" action="{{ update_her }}">
+                        <input type="hidden" value="{{ field.id }}" name="id">
+                        <td>
+                            <input type="text" value="{{ field.desc }}" name="desc">
+                        </td>
+                        <td>
+                            <input type="submit" value="Actualizar">
+                        </td>
+                    </form>
+                    <td>
+                        <form method="POST" action="{{ delete_her }}" style="display: inline">
+                            <input type="hidden" value="{{field.id}}" name="id">
+                            <input type="submit" value="Eliminar">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

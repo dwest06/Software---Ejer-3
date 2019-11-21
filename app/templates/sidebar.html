@@ -11,7 +11,6 @@
             <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
             <a href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a>
             <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
-
             <button class="dropdown-btn">Grupos de Procesos 
                 <i class="fa fa-caret-down"></i>
             </button>
@@ -22,6 +21,11 @@
                 {% endfor %}
             </div>
             <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
+            <a class="dropdown-item" href="{{ url_for('gestion.tec_her')}}">Tecnicas y Herramientas</a>
+            <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
+            <a class="dropdown-item" href="{{ url_for('gestion.actores')}}">Actores</a>
+            <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
+            <a class="dropdown-item" href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a>
         {% endif %}
         {% if current_user.is_authenticated %}
         <a href="{{ url_for('usuarios.logout') }}">Logout</a>

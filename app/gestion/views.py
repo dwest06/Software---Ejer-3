@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from ..usuarios.models import User 
-from .models import Procesos, Soporte, Grupos_Procesos, Habilitadora, Soporte_G
+from .models import Procesos, Soporte, Grupos_Procesos, Tecnicas, Herramientas, Actores, Habilitadora, Soporte_G
 from app import db
 
 gestion = Blueprint('gestion', __name__)
@@ -136,8 +136,7 @@ def gruposp_add():
         db.session.commit()
         flash("Grupo de Proceso agregado.","success")
         return redirect(url_for('gestion.gruposp'))
-    return render_template('generic_add.html', 
-        view = "Añadir Grupo de Procesos", groups = Grupos_Procesos.query.all())
+    return render_template('generic_add.html', view = "Agregar Grupo de Procesos")
 
 @login_required
 @gestion.route("/gruposp/update", methods=['POST'])
@@ -163,6 +162,7 @@ def gruposp_delete():
     return redirect(url_for('gestion.gruposp')) 
 
 # VIEW GENERICA DE CADA GRUPO
+
 @login_required
 @gestion.route("/gruposp/<grupo>")
 def custom_group(grupo):
@@ -259,3 +259,149 @@ def custom_group_delete_s(grupo):
         db.session.commit()
         flash("Disciplina de Soporte eliminada exitosamente.","success")
     return redirect(url_for('gestion.custom_group', grupo=grupo))
+
+# TECNICAS Y HERRAMIENTAS
+
+@login_required
+@gestion.route("/tec-her")
+def tec_her():
+    tecs = Tecnicas.query.all()
+    tools = Herramientas.query.all()
+    add_tecs = url_for('gestion.tecs_add')
+    add_tools  = url_for('gestion.tools_add')
+    update_tecs = url_for('gestion.tecs_update')
+    update_tools  = url_for('gestion.tools_update')
+    delete_tecs = url_for('gestion.tecs_delete')
+    delete_tools  = url_for('gestion.tools_delete')
+    return render_template('tecs-tools.html', 
+                            tecs = tecs, 
+                            her = tools, 
+                            add_tecs = add_tecs, 
+                            add_her = add_tools, 
+                            update_tecs = update_tecs,
+                            update_her = update_tools,
+                            delete_tecs = delete_tecs, 
+                            delete_her = delete_tools)
+
+@login_required
+@gestion.route("/tec-her/tecs/add", methods=['POST', 'GET'])
+def tecs_add():
+    if request.method == "POST":
+        desc = request.form.get("name")
+        p = Tecnicas(desc=desc)
+        db.session.add(p)
+        db.session.commit()
+        flash("T�cnica agregada.","success")
+        return redirect(url_for('gestion.tec_her'))
+    return render_template('generic_add.html',view="Agregar Tecnicas")
+
+
+@login_required
+@gestion.route("/tec-her/her/add", methods=['POST', 'GET'])
+def tools_add():
+    if request.method == "POST":
+        desc = request.form.get("name")
+        p = Herramientas(desc=desc)
+        db.session.add(p)
+        db.session.commit()
+        flash("Herramienta agregada.","success")
+        return redirect(url_for('gestion.tec_her'))
+    return render_template('generic_add.html',view="Agregar Herramientas")
+
+@login_required
+@gestion.route("/tec-her/tecs/update", methods=['POST'])
+def tecs_update():
+    if request.method == "POST":
+        pk = request.form.get('id')
+        desc = request.form.get('desc')
+        p = Tecnicas.query.get(pk)
+        p.desc = desc
+        db.session.commit()
+        flash("Tecnica actualizada.","success")
+    return redirect(url_for('gestion.tec_her'))
+
+@login_required
+@gestion.route("/tec-her/hertecs/update", methods=['POST'])
+def tools_update():
+    if request.method == "POST":
+        pk = request.form.get('id')
+        desc = request.form.get('desc')
+        p = Herramientas.query.get(pk)
+        p.desc = desc
+        db.session.commit()
+        flash("Herramienta actualizada.","success")
+    return redirect(url_for('gestion.tec_her'))
+
+@login_required
+@gestion.route("/tec-her/tecs/delete", methods=['POST'])
+def tecs_delete():
+    if request.method == "POST":
+        pk = request.form.get("id")
+        tecs = Tecnicas.query.get(pk)
+        db.session.delete(tecs)
+        db.session.commit()
+        return redirect(url_for("gestion.tec_her"))
+    return redirect(url_for('gestion.tec_her')) 
+
+@login_required
+@gestion.route("/tec-her/her/delete", methods=['POST'])
+def tools_delete():
+    if request.method == "POST":
+        pk = request.form.get("id")
+        her = Herramientas.query.get(pk)
+        db.session.delete(her)
+        db.session.commit()
+        return redirect(url_for("gestion.tec_her"))
+    return redirect(url_for('gestion.tec_her')) 
+
+# ACTORES
+
+@login_required
+@gestion.route("/actores")
+def actores():
+    actores = Actores.query.all()
+    add = url_for('gestion.actores_add')
+    update = url_for('gestion.actores_update')
+    delete = url_for('gestion.actores_delete')
+    return render_template('actores.html', form = actores, add = add, update = update, delete = delete)
+
+@login_required
+@gestion.route("/actores/add", methods=['POST', 'GET'])
+def actores_add():
+    if request.method == "POST":
+        fname = request.form.get("fname")
+        lname = request.form.get("lname")
+        roles = request.form.get("rol")
+        p = Actores(fname=fname,lname=lname,rol=roles)
+        db.session.add(p)
+        db.session.commit()
+        flash("Actor agregado.","success")
+        return redirect(url_for('gestion.actores'))
+    return render_template('actores_add.html')
+
+@login_required
+@gestion.route("/actores/update", methods=['POST'])
+def actores_update():
+    if request.method == "POST":
+        pk = request.form.get('id')
+        fname = request.form.get("fname")
+        lname = request.form.get("lname")
+        rol = rol.request.form.get("rol")
+        p = Actores.query.get(pk)
+        p.fname = fname
+        p.lname = lname
+        p.rol = rol
+        db.session.commit()
+        flash("Actor actualizado","success")
+    return redirect(url_for('gestion.actores'))
+
+@login_required
+@gestion.route("/actores/delete", methods=['POST'])
+def actores_delete():
+    if request.method == "POST":
+        pk = request.form.get("id")
+        actor = Actores.query.get(pk)
+        db.session.delete(actor)
+        db.session.commit()
+        return redirect(url_for("gestion.actores"))
+    return redirect(url_for('gestion.actores')) 
