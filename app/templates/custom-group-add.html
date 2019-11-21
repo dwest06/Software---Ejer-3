@@ -4,16 +4,22 @@
 
 <div class="row">
     <div class="offset-lg-2 col-lg-8 col-md-12">
-
       <div class="card">
         
         <div class="card-header">
-          <h1 style="text-align: center;">{{ view }}</h1>
+          <h1 style="text-align: center;">Agregar {{ grupo.name }} {{a}}</h1>
         </div>
 
         <div class="card-body">
           <form action="" method="POST" class="form-group">
-            <p><input type="text" name="name" class="form-control" placeholder="Nombre" required></p>
+            <p><input type="text" name="descripcion" class="form-control" placeholder="Descripcion" required></p>
+            <p>
+              <select name="disciplina" class="form-control">
+                {% for p in disciplinas %}
+                  <option value="{{p.id}}">{{p.name}}</option>
+                {% endfor %}
+              </select>
+            </p>
             <button type="submit" class="btn btn-success">Agregar</button>
           </form>
         </div>

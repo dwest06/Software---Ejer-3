@@ -1,28 +1,34 @@
-<div class="col-2 collapse d-md-flex bg-light pt-2 min-vh-100" id="sidebar">
-    <ul class="nav flex-column flex-nowrap">
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('gestion.home2')}}">Menu</a></li>                     
+<div class="col-md-3 col-lg-3 col-xl-2 bg-dark" >
+    <div class="sidenav">
+        <a href="{{ url_for('gestion.home2')}}">Menu</a>
+        <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
         {% if current_user.is_authenticated and current_user.is_admin() %}
-        <!--<li class="nav-item"><a class="nav-link" href="#">Configuración</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('gestion.procesos')}}">Disciplinas del Proceso</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('gestion.soporte')}}">Disciplinas de Soporte</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a></li>   
-        -->
-        <div class="dropdown show">
-            <a class="nav-link" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Configuración
-            </a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="{{ url_for('gestion.procesos')}}" >Disciplinas del Proceso</a>
-                <a class="dropdown-item" href="{{ url_for('gestion.soporte')}}">Disciplinas de Soporte</a>
-                <a class="dropdown-item" href="{{ url_for('gestion.gruposp')}}">Grupos de Proceso</a>
-                <a class="dropdown-item" href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a>
+            <a href="#">Configuración</a>
+            <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
+            <a href="{{ url_for('gestion.procesos')}}">Disciplinas del Proceso</a>
+            <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
+            <a href="{{ url_for('gestion.soporte')}}">Disciplinas de Soporte</a>
+            <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
+            <a href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a>
+            <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
+
+            <button class="dropdown-btn">Grupos de Procesos 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-container">
+            <a href="{{ url_for('gestion.gruposp') }}">Grupos de Procesos</a>
+                {% for g in groups %}
+                    <a href="{{ url_for('gestion.custom_group', grupo=g.id) }}">{{g.name}}</a>
+                {% endfor %}
             </div>
-        </div>
+            <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
         {% endif %}
         {% if current_user.is_authenticated %}
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('usuarios.logout') }}">Logout</a></li>
+        <a href="{{ url_for('usuarios.logout') }}">Logout</a>
+        <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
         {% else %}
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('usuarios.login') }}">Login</a></li>
+        <a href="{{ url_for('usuarios.login') }}">Login</a>
+        <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
         {% endif %}
-    </ul>
+    </div>
 </div>

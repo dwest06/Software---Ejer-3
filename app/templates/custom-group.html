@@ -1,0 +1,130 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="row" style="margin-bottom: 20px;">
+    <div class="col pt-2">
+        <h1 style="text-align: center;">Grupo {{grupo.name}}</h1>
+    </div>
+</div>
+<!-- HABILITADORAS  -->
+<div class="row" style="margin-bottom: 20px;">
+    <div class="offset-lg-2 col-lg-8 col-md-12 pt-2">
+        <h1 style="text-align: center;">Disciplinas Habilitadoras</h1>
+        <input type="search">
+        <button class="btn btn-info">Buscar</button>
+        <a class="btn btn-primary" href="{{ url_for('gestion.custom_group_add_h', grupo=grupo.id) }}">Agregar</a>
+    </div>
+</div>
+<div class="row">
+    <div class="offset-lg-2 col-lg-8 col-md-12">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Disciplinas</th>
+                <th scope="col">Modificar</th>
+                <th scope="col">Eliminar</th>
+            </thead>
+            <tbody>
+                {% for hab in habilitadoras %}
+                <tr>
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                        {{hab.id}}
+                        <br>
+                    </td>
+                    <form method="POST" action="{{ url_for('gestion.custom_group_modify_h', grupo=grupo.id) }}" class="form-group">
+                        <input type="hidden" value="{{hab.id}}" name="id">
+                        <input type="hidden" value="{{grupo.id}}" name="grupo">
+                        <td>
+                            <input type="text" value="{{hab.descripcion}}" name="descripcion" class="form-control">
+                        </td>
+                        <td>
+                          <select name="disciplina" class="form-control">
+                            {% for p in procesos %}
+                            {% if p.id == hab.procesos.id %}
+                              <option value="{{p.id}}" selected>{{p.name}}</option>
+                            {% else %}
+                              <option value="{{p.id}}">{{p.name}}</option>
+                            {% endif %}
+                              
+                            {% endfor %}
+                          </select>
+                        </td>
+                        <td>
+                            <input type="submit" class="btn btn-info" value="Update">
+                        </td>
+                    </form>
+                    <td>
+                        <form method="POST" action="{{ url_for('gestion.custom_group_delete_h', grupo=grupo.id) }}" style="display: inline">
+                            <input type="hidden" value="{{hab.id}}" name="id">
+                            <input type="hidden" value="{{grupo.id}}" name="grupo">
+                            <input type="submit" class="btn btn-danger" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- SOPORTE  -->
+<div class="row" style="margin-bottom: 20px;">
+    <div class="offset-lg-2 col-lg-8 col-md-12 pt-2">
+        <h1 style="text-align: center;">Disciplinas de Soporte</h1>
+        <input type="search">
+        <button class="btn btn-info">Buscar</button>
+        <a class="btn btn-primary" href="{{ url_for('gestion.custom_group_add_s', grupo=grupo.id) }}">Agregar</a>
+    </div>
+</div>
+<div class="row">
+    <div class="offset-lg-2 col-lg-8 col-md-12">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Disciplinas</th>
+                <th scope="col">Modificar</th>
+                <th scope="col">Eliminar</th>
+            </thead>
+            <tbody>
+                {% for so in soporte %}
+                <tr>
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                        {{so.id}}
+                        <br>
+                    </td>
+                    <form method="POST" action="{{ url_for('gestion.custom_group_modify_s', grupo=grupo.id) }}" class="form-group">
+                        <input type="hidden" value="{{so.id}}" name="id">
+                        <td>
+                            <input type="text" value="{{so.descripcion}}" name="descripcion" class="form-control">
+                        </td>
+                        <td>
+                          <select name="disciplina" class="form-control">
+                            {% for s in sop %}
+                              {% if s.id == so.soporte.id %}
+                                <option value="{{s.id}}" selected>{{s.name}}</option>
+                              {% else %}
+                                <option value="{{s.id}}">{{s.name}}</option>
+                              {% endif %}
+                              
+                            {% endfor %}
+                          </select>
+                        </td>
+                        <td>
+                            <input type="submit" class="btn btn-info" value="Update">
+                        </td>
+                    </form>
+                    <td>
+                        <form method="POST" action="{{ url_for('gestion.custom_group_delete_s', grupo=grupo.id) }}" style="display: inline">
+                            <input type="hidden" value="{{so.id}}" name="id">
+                            <input type="submit" class="btn btn-danger" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

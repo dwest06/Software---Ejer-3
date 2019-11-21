@@ -2,20 +2,22 @@
 
 {% block content %}
 
-<div class="row">
-
-    <div class="col pt-2">
+<div class="row" style="margin-bottom: 20px;">
+    <div class="offset-lg-2 col-lg-8 col-md-12">
         <h1 style="text-align: center;">{{ view }}</h1>
-
         <input type="search">
         <button class="btn btn-info">Buscar</button>
         <a class="btn btn-primary" href="{{ add }}">Agregar</a>
-
-        <br><br>
-        <table style="background-color:#bad0eb; border-radius: 10px;">
-            <thead>
-                <th>Id</th>
-                <th>Nombre</th>
+    </div>
+</div>
+<div class="row">
+    <div class="offset-lg-2 col-lg-8 col-md-12">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Modificar</th>
+                <th scope="col">Eliminar</th>
             </thead>
             <tbody>
                 {% for form in forms %}
@@ -30,13 +32,13 @@
                             <input type="text" value="{{form.name}}" name="name">
                         </td>
                         <td>
-                            <input type="submit" value="Update">
+                            <input type="submit" class="btn btn-info" value="Update">
                         </td>
                     </form>
                     <td>
                         <form method="POST" action="{{ delete }}" style="display: inline">
                             <input type="hidden" value="{{form.id}}" name="id">
-                            <input type="submit" value="Delete">
+                            <input type="submit" class="btn btn-danger" value="Delete">
                         </form>
                     </td>
                 </tr>

@@ -3,6 +3,7 @@ from flask_login import UserMixin, LoginManager, current_user, login_user, logou
 # from werkzeug import check_password_hash, generate_password_hashd
 from app import db
 from .models import User
+from app.gestion.models import Grupos_Procesos
 
 usuarios = Blueprint('usuarios', __name__, url_prefix='/usuarios')
 
@@ -14,7 +15,7 @@ def perfiles():
     if request.method == "GET":
         print(current_user.is_admin())
         users = User.query.all()
-    return render_template('perfiles_usuarios.html', users = users, cargos= User.PERMISOS )    
+    return render_template('perfiles_usuarios.html', users = users, cargos= User.PERMISOS, groups = Grupos_Procesos.query.all() )    
 
 @login_required
 @usuarios.route('/update',methods=["POST"])
