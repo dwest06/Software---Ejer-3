@@ -281,7 +281,7 @@ def tec_her():
                             update_tecs = update_tecs,
                             update_her = update_tools,
                             delete_tecs = delete_tecs, 
-                            delete_her = delete_tools)
+                            delete_her = delete_tools, groups = Grupos_Procesos.query.all())
 
 @login_required
 @gestion.route("/tec-her/tecs/add", methods=['POST', 'GET'])
@@ -293,8 +293,7 @@ def tecs_add():
         db.session.commit()
         flash("T�cnica agregada.","success")
         return redirect(url_for('gestion.tec_her'))
-    return render_template('generic_add.html',view="Agregar Tecnicas")
-
+    return render_template('generic_add.html',view="Agregar Tecnicas", groups = Grupos_Procesos.query.all())
 
 @login_required
 @gestion.route("/tec-her/her/add", methods=['POST', 'GET'])
@@ -306,7 +305,7 @@ def tools_add():
         db.session.commit()
         flash("Herramienta agregada.","success")
         return redirect(url_for('gestion.tec_her'))
-    return render_template('generic_add.html',view="Agregar Herramientas")
+    return render_template('generic_add.html',view="Agregar Herramientas", groups = Grupos_Procesos.query.all())
 
 @login_required
 @gestion.route("/tec-her/tecs/update", methods=['POST'])
@@ -363,7 +362,8 @@ def actores():
     add = url_for('gestion.actores_add')
     update = url_for('gestion.actores_update')
     delete = url_for('gestion.actores_delete')
-    return render_template('actores.html', form = actores, add = add, update = update, delete = delete)
+    return render_template('actores.html', form = actores, 
+        add = add, update = update, delete = delete, groups = Grupos_Procesos.query.all())
 
 @login_required
 @gestion.route("/actores/add", methods=['POST', 'GET'])
@@ -377,7 +377,7 @@ def actores_add():
         db.session.commit()
         flash("Actor agregado.","success")
         return redirect(url_for('gestion.actores'))
-    return render_template('actores_add.html')
+    return render_template('actores_add.html', groups = Grupos_Procesos.query.all())
 
 @login_required
 @gestion.route("/actores/update", methods=['POST'])

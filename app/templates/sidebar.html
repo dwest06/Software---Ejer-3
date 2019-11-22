@@ -3,29 +3,28 @@
         <a href="{{ url_for('gestion.home2')}}">Menu</a>
         <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
         {% if current_user.is_authenticated and current_user.is_admin() %}
-            <a href="#">Configuración</a>
-            <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
-            <a href="{{ url_for('gestion.procesos')}}">Disciplinas del Proceso</a>
-            <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
-            <a href="{{ url_for('gestion.soporte')}}">Disciplinas de Soporte</a>
-            <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
-            <a href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a>
+            <button class="dropdown-btn">Configuración
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="{{ url_for('gestion.procesos')}}">Disciplinas del Proceso</a>
+                <a href="{{ url_for('gestion.soporte')}}">Disciplinas de Soporte</a>
+                <a href="{{ url_for('gestion.tec_her')}}">Tecnicas y Herramientas</a>
+                <a href="{{ url_for('gestion.actores')}}">Actores</a>
+            </div>
             <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
             <button class="dropdown-btn">Grupos de Procesos 
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-container">
-            <a href="{{ url_for('gestion.gruposp') }}">Grupos de Procesos</a>
+                <a href="{{ url_for('gestion.gruposp') }}">Grupos de Procesos</a>
                 {% for g in groups %}
                     <a href="{{ url_for('gestion.custom_group', grupo=g.id) }}">{{g.name}}</a>
                 {% endfor %}
             </div>
             <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
-            <a class="dropdown-item" href="{{ url_for('gestion.tec_her')}}">Tecnicas y Herramientas</a>
+            <a href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a>
             <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
-            <a class="dropdown-item" href="{{ url_for('gestion.actores')}}">Actores</a>
-            <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
-            <a class="dropdown-item" href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a>
         {% endif %}
         {% if current_user.is_authenticated %}
         <a href="{{ url_for('usuarios.logout') }}">Logout</a>

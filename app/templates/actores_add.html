@@ -3,16 +3,21 @@
 {% block content %}
 
 <div class="row">
+  <div class="offset-lg-2 col-lg-8 col-md-12">
 
-    <div class="col pt-2">
-      <h1 style="text-align: center;">Agregar Actores</h1>
-
-      <form action="" method="POST" class="form-group">
-        <input type="text" name="fname" class="form-control" placeholder="Nombre" required>
-        <input type="text" name="lname" class="form-control" placeholder="Apellido" required>
-        <input type="text" name="rol" class="form-control" placeholder="Rol" required>
-        <button type="submit" class="btn btn-success">Agregar</button>
-      </form>
+    <div class="card">
+        
+      <div class="card-header">
+        <h1 style="text-align: center;">Agregar Actores</h1>
+      </div>
+      <div class="card-body">
+        <form action="" method="POST" class="form-group">
+          <input type="text" name="fname" class="form-control" placeholder="Nombre" required>
+          <input type="text" name="lname" class="form-control" placeholder="Apellido" required>
+          <input type="text" name="rol" class="form-control" placeholder="Rol" required>
+          <button type="submit" class="btn btn-success">Agregar</button>
+        </form>
+      </div>
     </div>
 </div>
 {% endblock %}

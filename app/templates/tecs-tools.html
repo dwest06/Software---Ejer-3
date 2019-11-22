@@ -4,7 +4,7 @@
 
 <div class="row">
 
-    <div class="col pt-2">
+    <div class="offset-lg-2 col-lg-8 col-md-12">
         <h1 style="text-align: center;">Técnicas y Herramientas</h1>
 
         <h2 style="text-align: left;">Técnicas</h2>
@@ -13,10 +13,12 @@
         <a class="btn btn-primary" href="{{ add_tecs }}">Agregar Técnica</a>
 
         <br><br>
-        <table style="background-color:#bad0eb; border-radius: 10px;">
-            <thead>
-                <th>Id</th>
-                <th>Descripción</th>
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <th scope="col">Id</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Modificar</th>
+                <th scope="col">Eliminar</th>
             </thead>
             <tbody>
                 {% for field in tecs %}
@@ -31,13 +33,13 @@
                             <input type="text" value="{{field.desc}}" name="desc">
                         </td>
                         <td>
-                            <input type="submit" value="Actualizar">
+                            <input type="submit" class="btn btn-info" value="Actualizar">
                         </td>
                     </form>
                     <td>
                         <form method="POST" action="{{ delete_tecs }}" style="display: inline">
                             <input type="hidden" value="{{field.id}}" name="id">
-                            <input type="submit" value="Eliminar">
+                            <input type="submit" class="btn btn-danger" value="Eliminar">
                         </form>
                     </td>
                 </tr>
@@ -50,10 +52,12 @@
         <a class="btn btn-primary" href="{{ add_her }}">Agregar Herramientas</a>
 
         <br><br>
-        <table style="background-color:#bad0eb; border-radius: 10px;">
-            <thead>
-                <th>Id</th>
-                <th>Descripción</th>
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <th scope="col">Id</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Modificar</th>
+                <th scope="col">Eliminar</th>
             </thead>
             <tbody>
                 {% for field in her %}
@@ -68,13 +72,13 @@
                             <input type="text" value="{{ field.desc }}" name="desc">
                         </td>
                         <td>
-                            <input type="submit" value="Actualizar">
+                            <input type="submit" class="btn btn-info" value="Actualizar">
                         </td>
                     </form>
                     <td>
                         <form method="POST" action="{{ delete_her }}" style="display: inline">
                             <input type="hidden" value="{{field.id}}" name="id">
-                            <input type="submit" value="Eliminar">
+                            <input type="submit" class="btn btn-danger" value="Eliminar">
                         </form>
                     </td>
                 </tr>
