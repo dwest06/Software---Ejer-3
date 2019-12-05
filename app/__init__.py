@@ -31,7 +31,8 @@ db = SQLAlchemy(app)
 from app.usuarios.views import usuarios as usuarios_module
 from app.usuarios.models import User
 from app.gestion.views import gestion as gestion_module
-from app.gestion.models import Grupos_Procesos, Procesos, Soporte, Soporte_G, Habilitadora
+from app.gestion.models import (Grupos_Procesos, Procesos, Soporte, 
+    Soporte_G, Habilitadora, Tecnicas, Herramientas, Actores, Portafolio)
 # Register blueprint(s)
 app.register_blueprint(usuarios_module)
 app.register_blueprint(gestion_module)
@@ -60,11 +61,16 @@ class CustomAdminView(AdminIndexView):
 
 
 admin = Admin(app, index_view=CustomAdminView())
+admin.add_view(ModelView(User, db.session))
 admin.add_view(ModelView(Grupos_Procesos, db.session))
 admin.add_view(ModelView(Procesos, db.session))
 admin.add_view(ModelView(Soporte, db.session))
 admin.add_view(ModelView(Soporte_G, db.session))
 admin.add_view(ModelView(Habilitadora, db.session))
+admin.add_view(ModelView(Tecnicas,db.session))
+admin.add_view(ModelView(Herramientas,db.session))
+admin.add_view(ModelView(Actores,db.session))
+admin.add_view(ModelView(Portafolio,db.session))
 
 try:
     u = User.query.filter_by(username='admin').first()

@@ -1,10 +1,13 @@
 {% extends "index.html" %}
 
+{% block title_page %}
+{{ view }}
+{% endblock  %}
+
 {% block content %}
 
 <div class="row" style="margin-bottom: 20px;">
     <div class="offset-lg-2 col-lg-8 col-md-12">
-        <h1 style="text-align: center;">{{ view }}</h1>
         <input type="search">
         <button class="btn btn-info">Buscar</button>
         <a class="btn btn-primary" href="{{ add }}">Agregar</a>

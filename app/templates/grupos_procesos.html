@@ -1,0 +1,389 @@
+{% extends "index.html" %}
+
+{% block css %}
+<style>
+  .tabs{
+      width:80%;
+      height:auto;
+      margin:0 auto;
+  }
+
+  /* tab list item */
+  .tabs .tabs-list{
+      list-style:none;
+      margin:0px;
+      padding:0px;
+      display:flex;
+  }
+  .tabs .tabs-list li{
+      flex-grow: 1;
+      margin:0px;
+      margin-right:2px;
+      padding:10px 5px;
+      text-align: center;
+      background-color:#1E555C;
+      border-radius:3px;
+  }
+  .tabs .tabs-list li:hover{
+      cursor:pointer;
+  }
+  .tabs .tabs-list li a{
+      text-decoration: none;
+      color:white;
+  }
+
+  /* Tab content section */
+  .tabs .tab{
+      display:none;
+      min-height:250px;
+      height:auto;
+      border-radius:0 5px 5px 5px ;
+      padding:20px 15px;
+      background-color:white;
+      color:darkslategray;
+      clear:both;
+  }
+  .tabs .tab h3{
+      border-bottom:3px solid cornflowerblue;
+      letter-spacing:1px;
+      font-weight:normal;
+      padding:5px;
+  }
+  .tabs .tab p{
+      line-height:20px;
+      letter-spacing: 1px;
+  }
+
+  /* When active state */
+  .active{
+      display:block !important;
+  }
+  .tabs .tabs-list li.active{
+      background-color:lavender !important;
+      color:black !important;
+  }
+  .active a{
+      color:black !important;
+  }
+
+  /* media query */
+  @media screen and (max-width:360px){
+      .tabs{
+          margin:0;
+          width:96%;
+      }
+      .tabs .tabs-list li{
+        flex-grow: 1;
+      }
+  }
+  .hr{
+    width: 80%;
+    border-top: 3px solid rgba(0,0,0,.1);
+  }
+</style>
+{% endblock  %}
+
+{% block title_page %}
+Grupos Procesos
+{% endblock  %}
+{% block content %}
+
+<div class="card">
+  <div class="card-header">
+  <h2 class="text-center">Grupo de Procesos</h2>
+  </div>
+
+  <div class="card-body">
+    <div class="tabs">
+      <ul class="tabs-list">
+        <li class="active"><a href="#tab1">Inicio</a></li>
+        <li ><a href="#tab2">Planificación</a></li>
+        <li ><a href="#tab3">Ejecución</a></li>
+        <li ><a href="#tab4">Control y Monitoreo</a></li>
+        <li ><a href="#tab5">Cierre</a></li>
+      </ul>
+      <hr class="hr">
+      <h3 class="card-title text-center">Flujos de Trabajo</h3>
+      <hr class="hr">
+      <h3 class="card-title text-center">Disciplinas Habilitadoras</h3>
+      <hr class="hr">
+
+      <!-- TAB INICIO -->
+      <div id="tab1" class="tab active">
+        <div class="selection form-group" style="width: 30%">
+          <label for="inicio">Disciplina: </label>
+          <select name="inicio" id="inicio" class="form-control">
+          {% for i in inicio.Habilitadora %}
+            <option value="{{i.id}}">{{i.descripcion}}</option>
+          {% endfor %}  
+          </select>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            Actividades
+          </div>
+
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <th scope="col">Id</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Agregar</th>
+              </thead>
+              <tbody>
+                {% if inicio.Habilitadora %}
+                  {% for i in inicio.Habilitadora[0].ActividadesH %}
+                    <tr>
+                      <td>{{i.id}}</td>
+                      <td>{{i.descripcion}}</td>
+                      <td>
+                        <div class="btn btn-primary" data-toggle="modal" 
+                          data-target="#agregarTarea">Agregar</div>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card-footer">
+            <div class="btn btn-success modalAct" data-toggle="modal" 
+              data-target="#agregarActividad" data-grupo="#inicio">Agregar Actividad</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB PLANIFICACION -->
+      <div id="tab2" class="tab">
+        <div class="selection form-group" style="width: 30%">
+          <label for="planificacion">Disciplina: </label>
+          <select name="planificacion" id="planificacion" class="form-control">
+          {% for i in planificacion.Habilitadora %}
+            <option value="{{i.id}}">{{i.descripcion}}</option>
+          {% endfor %}  
+          </select>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            Actividades
+          </div>
+
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <th scope="col">Id</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Agregar</th>
+              </thead>
+              <tbody>
+                
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card-footer">
+            <div class="btn btn-success modalAct" data-toggle="modal" 
+              data-target="#agregarActividad" data-grupo="#planificacion">Agregar Actividad</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB EJECUCION -->
+      <div id="tab3" class="tab">
+        <div class="selection form-group" style="width: 30%">
+          <label for="ejecucion">Disciplina: </label>
+          <select name="ejecucion" id="ejecucion" class="form-control">
+          {% for i in ejecucion.Habilitadora %}
+            <option value="{{i.id}}">{{i.descripcion}}</option>
+          {% endfor %}  
+          </select>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            Actividades
+          </div>
+
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <th scope="col">Id</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Agregar</th>
+              </thead>
+              <tbody>
+                
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card-footer">
+            <div class="btn btn-success modalAct" data-toggle="modal" 
+              data-target="#agregarActividad" data-grupo="#ejecucion">Agregar Actividad</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB CONTROL Y MONITOREO -->
+      <div id="tab4" class="tab">
+        <div class="selection form-group" style="width: 30%">
+          <label for="cym">Disciplina: </label>
+          <select name="cym" id="cym" class="form-control">
+          {% for i in cym.Habilitadora %}
+            <option value="{{i.id}}">{{i.descripcion}}</option>
+          {% endfor %}  
+          </select>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            Actividades
+          </div>
+
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <th scope="col">Id</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Agregar</th>
+              </thead>
+              <tbody>
+                
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card-footer">
+            <div class="btn btn-success modalAct" data-toggle="modal" 
+              data-target="#agregarActividad" data-grupo="#cym">Agregar Actividad</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB CIERRE -->
+      <div id="tab5" class="tab">
+        <div class="selection form-group" style="width: 30%">
+          <label for="cierre">Disciplina: </label>
+          <select name="cierre" id="cierre" class="form-control">
+          {% for i in cierre.Habilitadora %}
+            <option value="{{i.id}}">{{i.descripcion}}</option>
+          {% endfor %}  
+          </select>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            Actividades
+          </div>
+
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <th scope="col">Id</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Agregar</th>
+              </thead>
+              <tbody>
+                
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card-footer">
+            <div class="btn btn-success modalAct" data-toggle="modal" 
+              data-target="#agregarActividad" data-grupo="#cierre">Agregar Actividad</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Tareas -->
+<div class="modal fade" id="agregarTarea" tabindex="-1" role="dialog" aria-labelledby="agregarTarea" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="agregarTareaTitle">Agregar Tareas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" class="form-group"></form>
+        <input type="hidden" name="id" value="" id="idactividad">
+        <div class="modal-body">
+          <input type="text" name="" value="" class="form-control">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary">Agregar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Actividades -->
+<div class="modal fade" id="agregarActividad" tabindex="-1" role="dialog" aria-labelledby="agregarActividad" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="agregarActividadTitle">Agregar Actividad</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" class="form-group"></form>
+        <input type="hidden" name="id" value="" id="iddisciplina">
+        <div class="modal-body">
+          <input type="text" name="" value="" class="form-control">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary">Agregar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    // Cuando se abre un modal
+    $(".modalAct").click(function(a){
+      let data = $(this).data('grupo');
+      console.log(data);
+      let id = $(data).find(":selected").val();
+      console.log(id);
+      document.getElementById("iddisciplina").value = id;
+    })
+
+    $(".tabs-list li a").click(function(e){
+      e.preventDefault();
+    });
+
+    $(".tabs-list li").click(function(){
+      var tabid = $(this).find("a").attr("href");
+      $(".tabs-list li,.tabs div.tab").removeClass("active");   // removing active class from tab
+
+      $(".tab").hide();   // hiding open tab
+      $(tabid).show();    // show tab
+      $(this).addClass("active"); //  adding active class to clicked tab
+
+    });
+
+  });
+</script>
+{% endblock  %}

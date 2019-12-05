@@ -1,10 +1,13 @@
 {% extends "index.html" %}
 
+{% block title_page %}
+Perfiles de Usuarios
+{% endblock  %}
+
 {% block content %}
 
 <div class="row" style="margin-bottom: 20px;">
     <div class="offset-lg-2 col-lg-8 col-md-12">
-        <h1 style="text-align: center;">Perfiles de Usuarios</h1>
         <input type="search">
         <button class="btn btn-info">Buscar</button>
         <a class="btn btn-primary" href="{{ url_for('usuarios.register') }}">Agregar</a>
@@ -20,6 +23,7 @@
                 <th scope="col">Username</th>
                 <th scope="col">Email</th>
                 <th scope="col">Cargo</th>
+                <th scope="col">Proyecto</th>
                 <th scope="col">Modificar</th>
                 <th scope="col">Eliminar</th>
             </thead>
@@ -45,6 +49,20 @@
                                         <option value="{{no}}" selected>{{permiso}}</option>
                                     {% else %}
                                         <option value="{{no}}">{{permiso}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <select name="proyecto" id="proyecto">
+                                {% if not user.portafolio %}
+                                    <option value="0" selected>No asginado</option>
+                                {% endif %}
+                                {% for proyecto in proyectos %}
+                                    {% if user.portafolio and user.portafolio[0].id == proyecto.id %}
+                                        <option value="{{proyecto.id}}" selected>{{proyecto.descripcion}}</option>
+                                    {% else %}
+                                        <option value="{{proyecto.id}}">{{proyecto.descripcion}}</option>
                                     {% endif %}
                                 {% endfor %}
                             </select>

@@ -3,7 +3,7 @@ from flask_login import UserMixin, LoginManager, current_user, login_user, logou
 # from werkzeug import check_password_hash, generate_password_hashd
 from app import db
 from .models import User
-from app.gestion.models import Grupos_Procesos
+from app.gestion.models import Grupos_Procesos, Portafolio
 
 usuarios = Blueprint('usuarios', __name__, url_prefix='/usuarios')
 
@@ -13,9 +13,9 @@ usuarios = Blueprint('usuarios', __name__, url_prefix='/usuarios')
 @usuarios.route('/perfiles', methods=['GET'])
 def perfiles():
     if request.method == "GET":
-        print(current_user.is_admin())
         users = User.query.all()
-    return render_template('perfiles_usuarios.html', users = users, cargos= User.PERMISOS, groups = Grupos_Procesos.query.all() )    
+        proyectos = Portafolio.query.all()
+    return render_template('perfiles_usuarios.html', users = users, cargos= User.PERMISOS, proyectos = proyectos, groups = Grupos_Procesos.query.all() )    
 
 @login_required
 @usuarios.route('/update',methods=["POST"])
@@ -25,12 +25,14 @@ def update():
         newusername = request.form.get("newusername")
         newemail = request.form.get("newemail")
         cargo = request.form.get("cargo")
-
+        proyecto = Portafolio.query.get(request.form.get('proyecto'))
         user = User.query.get(pk)
 
         user.username = newusername
         user.email = newemail
         user.permiso = int(cargo)
+        if proyecto != "":
+            user.portafolio.append(proyecto)
 
         db.session.commit()
         return redirect(url_for("gestion.home2"))
@@ -54,10 +56,13 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
         confirm = request.form.get("confirm")
-
+        proyecto = Portafolio.query.get(request.form.get('proyecto'))
         if password == confirm:
             # Creamos el user
             user = User(username = username, email = email, password = password, permiso=3)
+
+            if proyecto != "":
+                user.portafolio.append(proyecto)
 
             # Guardamos en la db
             db.session.add(user)
@@ -68,7 +73,8 @@ def register():
             return render_template("register.html")
     else:
         if current_user.is_admin():
-            return render_template("register.html")
+            proyectos = Portafolio.query.all()
+            return render_template("register.html", proyectos = proyectos )
         else:
             flash("Acceso no permitido", "error")
             return redirect(url_for("gestion.home2"))
@@ -79,7 +85,6 @@ def login():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        #secure_password = sha256_crypt.encrypt(str(password)) # Encriptar
 
         user = User.query.filter_by(username=username).first()
         if user is not None:

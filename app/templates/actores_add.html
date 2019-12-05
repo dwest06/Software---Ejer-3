@@ -1,5 +1,9 @@
 {% extends "index.html" %}
 
+{% block title_page %}
+Agregar Actores
+{% endblock  %}
+
 {% block content %}
 
 <div class="row">
@@ -12,9 +16,9 @@
       </div>
       <div class="card-body">
         <form action="" method="POST" class="form-group">
-          <input type="text" name="fname" class="form-control" placeholder="Nombre" required>
-          <input type="text" name="lname" class="form-control" placeholder="Apellido" required>
-          <input type="text" name="rol" class="form-control" placeholder="Rol" required>
+          <input type="text" name="fname" class="form-control mb-20" placeholder="Nombre" required>
+          <input type="text" name="lname" class="form-control mb-20" placeholder="Apellido" required>
+          <input type="text" name="rol" class="form-control mb-20" placeholder="Rol" required>
           <button type="submit" class="btn btn-success">Agregar</button>
         </form>
       </div>

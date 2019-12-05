@@ -1,37 +1,49 @@
-<div class="col-md-3 col-lg-3 col-xl-2 bg-dark" >
-    <div class="sidenav">
-        <a href="{{ url_for('gestion.home2')}}">Menu</a>
-        <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
-        {% if current_user.is_authenticated and current_user.is_admin() %}
-            <button class="dropdown-btn">Configuración
+<ul class="nav flex-column flex-nowrap">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('gestion.home2')}}">Menu</a>
+    </li>
+    {% if current_user.is_especialista() or current_user.is_admin() %}
+        <li class="nav-item">
+            <a href="{{ url_for('gestion.gruposp2') }}">Grupos de Procesos </a>
+        </li>
+    {% endif %}
+    {% if current_user.is_authenticated and current_user.is_admin() %}
+        <li class="nav-item">
+            <div class="nav-link dropdown-btn">Configuración
                 <i class="fa fa-caret-down"></i>
-            </button>
+            </div>
             <div class="dropdown-container">
                 <a href="{{ url_for('gestion.procesos')}}">Disciplinas del Proceso</a>
                 <a href="{{ url_for('gestion.soporte')}}">Disciplinas de Soporte</a>
                 <a href="{{ url_for('gestion.tec_her')}}">Tecnicas y Herramientas</a>
                 <a href="{{ url_for('gestion.actores')}}">Actores</a>
+                <a href="{{ url_for('gestion.portafolio')}}">Portafolio</a>
             </div>
-            <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
-            <button class="dropdown-btn">Grupos de Procesos 
+        </li>
+        <li class="nav-item">
+            <div class="nav-link dropdown-btn">Grupos de Procesos 
                 <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-container">
-                <a href="{{ url_for('gestion.gruposp') }}">Grupos de Procesos</a>
-                {% for g in groups %}
-                    <a href="{{ url_for('gestion.custom_group', grupo=g.id) }}">{{g.name}}</a>
-                {% endfor %}
             </div>
-            <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
-            <a href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a>
-            <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
-        {% endif %}
-        {% if current_user.is_authenticated %}
-        <a href="{{ url_for('usuarios.logout') }}">Logout</a>
-        <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
-        {% else %}
-        <a href="{{ url_for('usuarios.login') }}">Login</a>
-        <hr style="width: 70%; border-top: 1px solid #bfbfbf;">
-        {% endif %}
-    </div>
-</div>
+            <div class="dropdown-container">
+                {% if current_user.is_admin() %}
+                    <a href="{{ url_for('gestion.gruposp') }}">Grupos de Procesos</a>
+                    {% for g in groups %}
+                        <a href="{{ url_for('gestion.custom_group', grupo=g.id) }}">{{g.name}}</a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a>
+        </li>
+    {% endif %}
+    {% if current_user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('usuarios.logout') }}">Logout</a>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('usuarios.login') }}">Login</a>
+        </li>
+    {% endif %}
+</ul>

@@ -1,11 +1,10 @@
 {% extends "index.html" %}
 
+{% block title_page %}
+Grupo {{grupo.name}}
+{% endblock title_page %}
+
 {% block content %}
-<div class="row" style="margin-bottom: 20px;">
-    <div class="col pt-2">
-        <h1 style="text-align: center;">Grupo {{grupo.name}}</h1>
-    </div>
-</div>
 <!-- HABILITADORAS  -->
 <div class="row" style="margin-bottom: 20px;">
     <div class="offset-lg-2 col-lg-8 col-md-12 pt-2">

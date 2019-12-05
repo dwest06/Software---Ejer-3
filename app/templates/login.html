@@ -1,7 +1,12 @@
 {% extends "index.html" %}
+
+{% block title_page %}
+Login
+{% endblock  %}
+
+
 {% block content %}
 <div class="container">
-    <h1>Login</h1>
 
     {% with errors = get_flashed_messages(category_filter=["error"]) %}
     {% if errors %}

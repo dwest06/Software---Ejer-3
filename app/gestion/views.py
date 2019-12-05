@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from ..usuarios.models import User 
-from .models import Procesos, Soporte, Grupos_Procesos, Tecnicas, Herramientas, Actores, Habilitadora, Soporte_G
+from .models import (Procesos, Soporte, Grupos_Procesos, 
+    Tecnicas, Herramientas, Actores, Habilitadora, 
+    Soporte_G, Portafolio )
 from app import db
 
 gestion = Blueprint('gestion', __name__)
@@ -160,6 +162,21 @@ def gruposp_delete():
         db.session.commit()
         return redirect(url_for("gestion.gruposp"))
     return redirect(url_for('gestion.gruposp')) 
+
+@login_required
+@gestion.route("/gruposp2")
+def gruposp2():
+    grupos = Grupos_Procesos.query.all()
+    inicio = Grupos_Procesos.query.filter_by(name='Inicio').first()
+    print(inicio.Habilitadora[0].descripcion)
+    planificacion = Grupos_Procesos.query.filter_by(name='Planificacion').first()
+    ejecucion = Grupos_Procesos.query.filter_by(name='Ejecucion').first()
+    cym = Grupos_Procesos.query.filter_by(name='Control y monitoreo').first()
+    cierre = Grupos_Procesos.query.filter_by(name='Cierre').first()
+    return render_template('grupos_procesos.html', view = "Grupos de Procesos", 
+        forms = grupos, groups = Grupos_Procesos.query.all(), inicio=inicio, planificacion=planificacion,
+        ejecucion = ejecucion, cym = cym, cierre=cierre
+        )
 
 # VIEW GENERICA DE CADA GRUPO
 
@@ -405,3 +422,51 @@ def actores_delete():
         db.session.commit()
         return redirect(url_for("gestion.actores"))
     return redirect(url_for('gestion.actores')) 
+
+
+# PORTAFOLIO DE PROYECTOS
+
+@login_required
+@gestion.route("/portafolio")
+def portafolio():
+    portafolio = Portafolio.query.all()
+    add = url_for('gestion.portafolio_add')
+    update = url_for('gestion.portafolio_update')
+    delete = url_for('gestion.portafolio_delete')
+    return render_template('portafolio.html', forms = portafolio,
+        add = add, update = update, delete = delete, groups = Grupos_Procesos.query.all())
+
+@login_required
+@gestion.route("/portafolio/add", methods=['POST', 'GET'])
+def portafolio_add():
+    if request.method == "POST":
+        descripcion = request.form.get('descripcion')
+        p = Portafolio(descripcion=descripcion)
+        db.session.add(p)
+        db.session.commit()
+        flash("Proyecto agregado.","success")
+        return redirect(url_for('gestion.portafolio'))
+    return render_template('portafolio_add.html', groups = Grupos_Procesos.query.all())
+
+@login_required
+@gestion.route("/portafolio/update", methods=['POST'])
+def portafolio_update():
+    if request.method == "POST":
+        pk = request.form.get('id')
+        descripcion = request.form.get('descripcion')
+        p = Portafolio.query.get(pk)
+        p.descripcion = descripcion
+        db.session.commit()
+        flash("Proyecto actualizado","success")
+    return redirect(url_for('gestion.portafolio'))
+
+@login_required
+@gestion.route("/portafolio/delete", methods=['POST'])
+def portafolio_delete():
+    if request.method == "POST":
+        pk = request.form.get("id")
+        actor = Portafolio.query.get(pk)
+        db.session.delete(actor)
+        db.session.commit()
+        flash("Proyecto actualizado","success")
+    return redirect(url_for('gestion.portafolio')) 
