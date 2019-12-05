@@ -4,7 +4,10 @@
     </li>
     {% if current_user.is_especialista() or current_user.is_admin() %}
         <li class="nav-item">
-            <a href="{{ url_for('gestion.gruposp2') }}">Grupos de Procesos </a>
+            <a href="{{ url_for('gestion.gruposp2h') }}">Grupos de Procesos Habilitadores</a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url_for('gestion.gruposp2s') }}">Grupos de Procesos de Soporte</a>
         </li>
     {% endif %}
     {% if current_user.is_authenticated and current_user.is_admin() %}
