@@ -87,56 +87,56 @@ class BasicTests(unittest.TestCase):
             '/perfiles',
             follow_redirects=True)
 
-    # border case
-    def test_register_border_case(self):
+    # buttons
+    def test_register_buttons(self):
         return self.app.post(
             '/usuarios/register',
             #data=dict(username=username, email=email, password=password, permiso=confirm),
             follow_redirects=True
         )
     
-    def test_login_border_case(self):
+    def test_login_buttons(self):
         return self.app.post(
             '/usuarios/login',
             #data=dict(username=username, password=password),
             follow_redirects=True
         )
     
-    def test_logout_border_case(self):
+    def test_logout_buttons(self):
         return self.app.get(
             '/usuarios/login',
             follow_redirects=True)
     
-    def test_procesos_border_case(self):
+    def test_procesos_buttons(self):
         return self.app.get(
             '/procesos',
             follow_redirects=True)
 
-    def test_soporte_border_case(self):
+    def test_soporte_buttons(self):
         return self.app.get(
             '/soporte',
             follow_redirects=True)
 
-    def test_gruposp_border_case(self):
+    def test_gruposp_buttons(self):
         return self.app.get(
             '/gruposp',
             follow_redirects=True)
 
-    def test_techer_border_case(self):
+    def test_techer_buttons(self):
         return self.app.get(
             '/tec-her',
             follow_redirects=True)
     
-    def test_actores_border_case(self):
+    def test_actores_buttons(self):
         return self.app.get(
             '/actores',
             follow_redirects=True)
     
-    def test_perfiles_border_case(self):
+    def test_perfiles_buttons(self):
         return self.app.get(
             '/perfiles',
             follow_redirects=True)
-    
+
     # database
     def test_register_database(self):
         return self.app.post(
@@ -186,6 +186,208 @@ class BasicTests(unittest.TestCase):
         return self.app.get(
             '/perfiles',
             follow_redirects=True)
+
+    # add
+    def test_register_add(self):
+        return self.app.post(
+            '/usuarios/register',
+            #data=dict(username=username, email=email, password=password, permiso=confirm),
+            follow_redirects=True
+        )
+    
+    def test_login_add(self):
+        return self.app.post(
+            '/usuarios/login',
+            #data=dict(username=username, password=password),
+            follow_redirects=True
+        )
+    
+    def test_logout_add(self):
+        return self.app.get(
+            '/usuarios/login',
+            follow_redirects=True)
+    
+    def test_procesos_add(self):
+        return self.app.get(
+            '/procesos',
+            follow_redirects=True)
+
+    def test_soporte_add(self):
+        return self.app.get(
+            '/soporte',
+            follow_redirects=True)
+
+    def test_gruposp_add(self):
+        return self.app.get(
+            '/gruposp',
+            follow_redirects=True)
+
+    def test_techer_add(self):
+        return self.app.get(
+            '/tec-her',
+            follow_redirects=True)
+    
+    def test_actores_add(self):
+        return self.app.get(
+            '/actores',
+            follow_redirects=True)
+    
+    def test_perfiles_add(self):
+        return self.app.get(
+            '/perfiles',
+            follow_redirects=True)
+
+    # update
+    def test_register_update(self):
+        return self.app.post(
+            '/usuarios/register',
+            #data=dict(username=username, email=email, password=password, permiso=confirm),
+            follow_redirects=True
+        )
+    
+    def test_login_update(self):
+        return self.app.post(
+            '/usuarios/login',
+            #data=dict(username=username, password=password),
+            follow_redirects=True
+        )
+    
+    def test_logout_update(self):
+        return self.app.get(
+            '/usuarios/login',
+            follow_redirects=True)
+    
+    def test_procesos_update(self):
+        return self.app.get(
+            '/procesos',
+            follow_redirects=True)
+
+    def test_soporte_update(self):
+        return self.app.get(
+            '/soporte',
+            follow_redirects=True)
+
+    def test_gruposp_update(self):
+        return self.app.get(
+            '/gruposp',
+            follow_redirects=True)
+
+    def test_techer_update(self):
+        return self.app.get(
+            '/tec-her',
+            follow_redirects=True)
+    
+    def test_actores_update(self):
+        return self.app.get(
+            '/actores',
+            follow_redirects=True)
+    
+    def test_perfiles_update(self):
+        return self.app.get(
+            '/perfiles',
+            follow_redirects=True)
+
+    # deleted
+    def test_register_deleted(self):
+        return self.app.post(
+            '/usuarios/register',
+            #data=dict(username=username, email=email, password=password, permiso=confirm),
+            follow_redirects=True
+        )
+    
+    def test_login_deleted(self):
+        return self.app.post(
+            '/usuarios/login',
+            #data=dict(username=username, password=password),
+            follow_redirects=True
+        )
+    
+    def test_logout_deleted(self):
+        return self.app.get(
+            '/usuarios/login',
+            follow_redirects=True)
+    
+    def test_procesos_deleted(self):
+        return self.app.get(
+            '/procesos',
+            follow_redirects=True)
+
+    def test_soporte_deleted(self):
+        return self.app.get(
+            '/soporte',
+            follow_redirects=True)
+
+    def test_gruposp_deleted(self):
+        return self.app.get(
+            '/gruposp',
+            follow_redirects=True)
+
+    def test_techer_deleted(self):
+        return self.app.get(
+            '/tec-her',
+            follow_redirects=True)
+    
+    def test_actores_deleted(self):
+        return self.app.get(
+            '/actores',
+            follow_redirects=True)
+    
+    def test_perfiles_deleted(self):
+        return self.app.get(
+            '/perfiles',
+            follow_redirects=True)
+ 
+    # border case
+    def test_register_border_case(self):
+        return self.app.post(
+            '/usuarios/register',
+            #data=dict(username=username, email=email, password=password, permiso=confirm),
+            follow_redirects=True
+        )
+    
+    def test_login_border_case(self):
+        return self.app.post(
+            '/usuarios/login',
+            #data=dict(username=username, password=password),
+            follow_redirects=True
+        )
+    
+    def test_logout_border_case(self):
+        return self.app.get(
+            '/usuarios/login',
+            follow_redirects=True)
+    
+    def test_procesos_border_case(self):
+        return self.app.get(
+            '/procesos',
+            follow_redirects=True)
+
+    def test_soporte_border_case(self):
+        return self.app.get(
+            '/soporte',
+            follow_redirects=True)
+
+    def test_gruposp_border_case(self):
+        return self.app.get(
+            '/gruposp',
+            follow_redirects=True)
+
+    def test_techer_border_case(self):
+        return self.app.get(
+            '/tec-her',
+            follow_redirects=True)
+    
+    def test_actores_border_case(self):
+        return self.app.get(
+            '/actores',
+            follow_redirects=True)
+    
+    def test_perfiles_border_case(self):
+        return self.app.get(
+            '/perfiles',
+            follow_redirects=True)
+ 
+ 
  
     ###############
     #### tests ####
