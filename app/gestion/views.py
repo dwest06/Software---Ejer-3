@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from ..usuarios.models import User 
 from .models import (Procesos, Soporte, Grupos_Procesos, 
     Tecnicas, Herramientas, Actores, Habilitadora, 
-    Soporte_G, Portafolio )
+    Soporte_G, Portafolio, ActividadesH, ActividadesS )
 from flask_weasyprint import HTML, render_pdf
 from app import db
 
@@ -164,20 +164,63 @@ def gruposp_delete():
         return redirect(url_for("gestion.gruposp"))
     return redirect(url_for('gestion.gruposp')) 
 
+# HABILITADORAS
 @login_required
-@gestion.route("/gruposp2")
-def gruposp2():
+@gestion.route("/gruposp2h")
+def gruposp2h():
     grupos = Grupos_Procesos.query.all()
     inicio = Grupos_Procesos.query.filter_by(name='Inicio').first()
-    print(inicio.Habilitadora[0].descripcion)
     planificacion = Grupos_Procesos.query.filter_by(name='Planificacion').first()
     ejecucion = Grupos_Procesos.query.filter_by(name='Ejecucion').first()
     cym = Grupos_Procesos.query.filter_by(name='Control y monitoreo').first()
     cierre = Grupos_Procesos.query.filter_by(name='Cierre').first()
-    return render_template('grupos_procesos.html', view = "Grupos de Procesos", 
+
+    return render_template('grupos_procesos_habilitadora.html', view = "Grupos de Procesos", 
         forms = grupos, groups = Grupos_Procesos.query.all(), inicio=inicio, planificacion=planificacion,
         ejecucion = ejecucion, cym = cym, cierre=cierre
         )
+
+@login_required
+@gestion.route("/gruposp2/addacth", methods=['POST', 'GET'])
+def gruposp2_add_acth():
+    if request.method == "POST":
+        id = request.form.get("id")
+        descripcion = request.form.get("descripcion")
+        h = Habilitadora.query.get(id)
+
+        act = ActividadesH(descripcion=descripcion, habilitadora = h)
+        db.session.add(act)
+        db.session.commit()
+    return redirect(url_for('gestion.gruposp2h'))
+
+# SOPORTE
+@login_required
+@gestion.route("/gruposp2s")
+def gruposp2s():
+    grupos = Grupos_Procesos.query.all()
+    inicio = Grupos_Procesos.query.filter_by(name='Inicio').first()
+    planificacion = Grupos_Procesos.query.filter_by(name='Planificacion').first()
+    ejecucion = Grupos_Procesos.query.filter_by(name='Ejecucion').first()
+    cym = Grupos_Procesos.query.filter_by(name='Control y monitoreo').first()
+    cierre = Grupos_Procesos.query.filter_by(name='Cierre').first()
+
+    return render_template('grupos_procesos_soporte.html', view = "Grupos de Procesos", 
+        forms = grupos, groups = Grupos_Procesos.query.all(), inicio=inicio, planificacion=planificacion,
+        ejecucion = ejecucion, cym = cym, cierre=cierre
+        )
+
+@login_required
+@gestion.route("/gruposp2/addacts", methods=['POST', 'GET'])
+def gruposp2_add_acts():
+    if request.method == "POST":
+        id = request.form.get("id")
+        descripcion = request.form.get("descripcion")
+        h = Soporte_G.query.get(id)
+
+        act = ActividadesS(descripcion=descripcion, soporte_g = h)
+        db.session.add(act)
+        db.session.commit()
+    return redirect(url_for('gestion.gruposp2s'))
 
 # VIEW GENERICA DE CADA GRUPO
 
@@ -479,3 +522,4 @@ def informe_portafolio():
         portafolio = Portafolio.query.all()
         html = render_template('hello.html', portafolio=portafolio)
         return render_pdf(HTML(string=html))
+    return redirect(url_for('gestion.home2'))
