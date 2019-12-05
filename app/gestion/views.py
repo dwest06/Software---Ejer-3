@@ -473,7 +473,7 @@ def portafolio_delete():
     return redirect(url_for('gestion.portafolio')) 
 
 @login_required
-@gestion.route("/portafolio/informe", methods=['POST']
+@gestion.route("/portafolio/informe", methods=['POST'])
 def informe_portafolio():
     if request.method == "POST":
         portafolio = Portafolio.query.all()
