@@ -4,6 +4,7 @@ from ..usuarios.models import User
 from .models import (Procesos, Soporte, Grupos_Procesos, 
     Tecnicas, Herramientas, Actores, Habilitadora, 
     Soporte_G, Portafolio )
+from flask_weasyprint import HTML, render_pdf
 from app import db
 
 gestion = Blueprint('gestion', __name__)
@@ -470,3 +471,11 @@ def portafolio_delete():
         db.session.commit()
         flash("Proyecto actualizado","success")
     return redirect(url_for('gestion.portafolio')) 
+
+@login_required
+@gestion.route("/portafolio/informe", methods=['POST']
+def informe_portafolio():
+    if request.method == "POST":
+        portafolio = Portafolio.query.all()
+        html = render_template('hello.html', portafolio=portafolio)
+        return render_pdf(HTML(string=html))

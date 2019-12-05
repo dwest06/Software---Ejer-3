@@ -7,6 +7,23 @@
     <link href="css/style.css" rel="stylesheet">
   </head>
   <body>
-    
+    <div class="row">
+      <div class="offset-lg-2 col-lg-8 col-md-12">
+          <table class="table table-striped table-hover">
+              <thead class="thead-dark">
+                  <th scope="col">Proyecto</th>
+              </thead>
+              <tbody>
+                  {% for proyecto in portafolio %}
+                  <tr>
+                      <td style="padding-left: 12px; padding-right: 12px;">
+                          {{proyecto.descripcion}}
+                          <br>
+                      </td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
   </body>
 </html>
