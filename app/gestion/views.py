@@ -516,10 +516,8 @@ def portafolio_delete():
     return redirect(url_for('gestion.portafolio')) 
 
 @login_required
-@gestion.route("/portafolio/informe", methods=['POST'])
+@gestion.route("/portafolio/informe", methods=['POST','GET'])
 def informe_portafolio():
-    if request.method == "POST":
-        portafolio = Portafolio.query.all()
-        html = render_template('hello.html', portafolio=portafolio)
-        return render_pdf(HTML(string=html))
-    return redirect(url_for('gestion.home2'))
+    portafolio = Portafolio.query.all()
+    html = render_template('pdf.html', portafolio=portafolio)
+    return render_pdf(HTML(string=html))

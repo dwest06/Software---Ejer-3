@@ -2,7 +2,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ url_for('gestion.home2')}}">Menu</a>
     </li>
-    {% if current_user.is_especialista() or current_user.is_admin() %}
+    {% if current_user.permiso == 3 or current_user.permiso == 1 %}
         <li class="nav-item">
             <a href="{{ url_for('gestion.gruposp2h') }}">Grupos de Procesos Habilitadores</a>
         </li>
@@ -40,6 +40,11 @@
             <a class="nav-link" href="{{ url_for('usuarios.perfiles')}}">Perfiles de Usuarios</a>
         </li>
     {% endif %}
+        {% if current_user.permiso==2 or current_user.permiso==1 %}
+        <li class="nav-item">
+            <a href="{{ url_for('gestion.informe_portafolio') }}">Grupos de Procesos de Soporte</a>
+        </li>
+        {% endif %}
     {% if current_user.is_authenticated %}
         <li class="nav-item">
             <a class="nav-link" href="{{ url_for('usuarios.logout') }}">Logout</a>
@@ -48,5 +53,6 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ url_for('usuarios.login') }}">Login</a>
         </li>
+        
     {% endif %}
 </ul>
